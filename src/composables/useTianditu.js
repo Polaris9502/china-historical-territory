@@ -1,35 +1,22 @@
 // 天地图集成模块
 import { ref } from 'vue'
 
-// 天地图 Token 池（按顺序轮换使用）
-// 请通过 .env 文件配置：VITE_TIANDITU_TOKENS=token1,token2,token3
-const envTokens = import.meta.env.VITE_TIANDITU_TOKENS
-const TIANDITU_TK_POOL = envTokens
-	? envTokens.split(',').map(t => t.trim()).filter(Boolean)
-	: [
-		// 占位符：您可以在 .env 文件中配置自己的 Token
-		// 申请地址：https://console.tianditu.gov.cn/api/key
-		'your-tianditu-token-here',
-	]
-
-if (TIANDITU_TK_POOL.length === 0 || TIANDITU_TK_POOL[0] === 'your-tianditu-token-here') {
-	console.warn(
-		'[天地图] 未配置 VITE_TIANDITU_TOKENS，将使用占位符 Token。\n' +
-		'请在 .env 文件中添加：VITE_TIANDITU_TOKENS=token1,token2,...\n' +
-		'项目会自动降级到 OpenStreetMap 底图。'
-	)
-}
+// 天地图 Token 池
+const TIANDITU_TK_POOL = [
+	'0bd40ca92a8efe6560e3d6999c52557a',
+	'5043b83cf417fb0ea7d26b5c8050af21',
+	'c9a70dd1d69ebb0283c258e205aa8053',
+	'f55f3d9dd8e0ce645a99b068725939d9',
+	'ef0cdb6106f32cdb8587edda06148857',
+]
 
 // 使用普通变量而非 ref，避免循环依赖问题
 let currentTokenIndex = 0
 let currentTk = TIANDITU_TK_POOL[currentTokenIndex]
-if (TIANDITU_TK_POOL.length > 0) {
-	currentTokenIndex = (currentTokenIndex + 1) % TIANDITU_TK_POOL.length
-}
+currentTokenIndex = (currentTokenIndex + 1) % TIANDITU_TK_POOL.length
 
 // 获取下一个 Token（轮换）
 function getNextToken() {
-	if (TIANDITU_TK_POOL.length === 0) return ''
 	const tk = TIANDITU_TK_POOL[currentTokenIndex]
 	currentTokenIndex = (currentTokenIndex + 1) % TIANDITU_TK_POOL.length
 	return tk
@@ -43,9 +30,7 @@ export function getCurrentToken() {
 // 切换到下一个 Token
 export function switchToNextToken() {
 	currentTk = getNextToken()
-	if (currentTk && currentTk !== 'your-tianditu-token-here') {
-		console.log('天地图 Token 已切换:', currentTk.substring(0, 8) + '...')
-	}
+	console.log('天地图 Token 已切换:', currentTk.substring(0, 8) + '...')
 	return currentTk
 }
 
@@ -90,7 +75,7 @@ export function createTiandituLayers() {
 			},
 		},
 		img: {
-			url: getTiandituImgUrl(tk, 'img'),
+			url: getTiandituImgUrl(tk),
 			options: {
 				maxZoom: 18,
 				minZoom: 1,
