@@ -1,0 +1,39 @@
+{
+	"name": "china-historical-territory",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "中国历史疆域演变可视化 - 从虞朝到现代，上下五千年的疆域变化与多政权并立展示",
+	"keywords": [
+		"vue3",
+		"vite",
+		"leaflet",
+		"tianditu",
+		"china-history",
+		"historical-map",
+		"data-visualization",
+		"geojson"
+	],
+	"author": "ChinaMap Contributors",
+	"license": "MIT",
+	"homepage": "https://github.com/your-username/china-historical-territory",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/your-username/china-historical-territory.git"
+	},
+	"bugs": {
+		"url": "https://github.com/your-username/china-historical-territory/issues"
+	},
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"vue": "^3.3.4",
+		"leaflet": "^1.9.4"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^4.5.0",
+		"vite": "^4.5.0"
+	}
+}
